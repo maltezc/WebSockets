@@ -62,6 +62,30 @@ class ChatUser {
     });
   }
 
+  /** Handle a joke: broadcast to room.
+   *
+   * */
+
+   handleJoke() {
+    this.room.broadcast({
+      name: 'bot',
+      type: "joke",
+    });
+  }
+
+  /** Handles '/members' command: broadcast to room.
+   *
+   * @param text {string} message to send
+   * */
+
+   handleMembers() {
+    this.room.broadcast({
+      name: 'bot',
+      type: "members",
+      text: this.room.members
+    });
+  }
+
   /** Handle messages from client:
    *
    * @param jsonData {string} raw message data
@@ -77,6 +101,8 @@ class ChatUser {
 
     if (msg.type === "join") this.handleJoin(msg.name);
     else if (msg.type === "chat") this.handleChat(msg.text);
+    else if (msg.type === "joke") this.handleJoke();
+    else if (msg.type === "members") this.handleMembers();
     else throw new Error(`bad message: ${msg.type}`);
   }
 
