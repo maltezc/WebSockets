@@ -66,10 +66,12 @@ $("form").submit(function (evt) {
     data = { type: "joke" };
   } else if ($("#m").val() === "/members") {
     data = { type: "members" };
-  } else if ($("#m").val().startsWith("/priv")) {
+  } else if ($("#m").val().splits(" ")[0] === '/priv') {
+  // } else if ($("#m").val().startsWith("/priv")) {
+    console.log("cars");
     [command, pmUser, ...msg] = $("#m").val().split(" ");
     msg = msg.join(" ");
-    data = { type: "chat", text: msg };
+    data = { pmUser, type: "private-message", text: msg };
   } else {
     data = { type: "chat", text: $("#m").val() };
   }

@@ -67,6 +67,16 @@ class Room {
       member.send(JSON.stringify(data));
     }
   }
+
+  /** Send message to specified member in a room.
+   *
+   * @param data {string} message to send
+   * */
+
+   sendPrivateMessage( data) {
+    let foundUser = this.members.filter(x => x.name === data.tName)
+    foundUser.send(JSON.stringify(data.text))
+  }
 }
 
 module.exports = Room;

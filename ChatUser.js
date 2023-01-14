@@ -91,6 +91,22 @@ class ChatUser {
     });
   }
 
+  /** Handles '/priv' command for private message: broadcast
+   * to designated user only.
+   *
+   * @param text {string} message to send
+   * */
+
+   handlePrivatemessage(toUser, text) {
+
+    this.room.sendPrivateMessage({
+      fName: this.name,
+      tName: toUser,
+      type: "private-message",
+      text: text,
+    });
+  }
+
   /** Handle messages from client:
    *
    * @param jsonData {string} raw message data
@@ -108,6 +124,7 @@ class ChatUser {
     else if (msg.type === "chat") this.handleChat(msg.text);
     else if (msg.type === "joke") this.handleJoke();
     else if (msg.type === "members") this.handleMembers();
+    else if (msg.type === 'private-message') this.handlePrivatemessage(msg.pmUser, msg.text);
     else throw new Error(`bad message: ${msg.type}`);
   }
 
