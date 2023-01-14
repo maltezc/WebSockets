@@ -35,7 +35,9 @@ ws.onmessage = function (evt) {
     );
   } else if (msg.type === "members") {
     item = $(`<li><b> Bot: </b>List of people in the room: ${msg.text}</li>`);
-  } else {
+  } else if (msg.type === "private-message") {
+
+  }else {
     return console.error(`bad message: ${msg}`);
   }
 
@@ -61,15 +63,24 @@ $("form").submit(function (evt) {
 
   let data;
 
+  const msgVal = $("#m").val()
+  console.log("🚀 ~ file: chat.js:65 ~ msgVal", msgVal)
+
+
   // if value of field is '/joke' then send back data with type of get joke
-  if ($("#m").val() === "/joke") {
+  if (msgVal.indexOf('/joke') === 0) {
+  // if ($("#m").val() === "/joke") {
     data = { type: "joke" };
-  } else if ($("#m").val() === "/members") {
+  } else if (msgVal.indexOf('/members') === 0) {
+  // } else if ($("#m").val() === "/members") {
     data = { type: "members" };
-  } else if ($("#m").val().splits(" ")[0] === '/priv') {
+  } else if (msgVal.indexOf('/priv') === 0) {
+  // } else if ($("#m").val().indexOf('/priv') === 0) {
+  // } else if ($("#m").val().splits(" ")[0] === '/priv') {
   // } else if ($("#m").val().startsWith("/priv")) {
     console.log("cars");
     [command, pmUser, ...msg] = $("#m").val().split(" ");
+    // TODO: getting command is not defined here^. try using index of and/or splitting to get values
     msg = msg.join(" ");
     data = { pmUser, type: "private-message", text: msg };
   } else {
