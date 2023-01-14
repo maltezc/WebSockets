@@ -66,9 +66,9 @@ class ChatUser {
    *
    * */
 
-   handleJoke() {
+  handleJoke() {
     this.room.broadcast({
-      name: 'bot',
+      name: "bot",
       type: "joke",
     });
   }
@@ -78,11 +78,16 @@ class ChatUser {
    * @param text {string} message to send
    * */
 
-   handleMembers() {
+  handleMembers() {
+    const members = [];
+    for (let user of this.room.members) {
+      members.push(user.name);
+    }
+
     this.room.broadcast({
-      name: 'bot',
+      name: "bot",
       type: "members",
-      text: this.room.members
+      text: members.join(', '),
     });
   }
 
